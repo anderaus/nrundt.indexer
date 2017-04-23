@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nrundt.indexer", "nrundt.indexer\nrundt.indexer.csproj", "{09D9CAA5-B78E-448B-AB8D-F1AE79D46873}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{65FD5A1B-38C9-40A4-BE83-7320DE94EDB6}"
+	ProjectSection(SolutionItems) = preProject
+		resources\norge_rundt_statistikkmoro_2016.csv = resources\norge_rundt_statistikkmoro_2016.csv
+		resources\norge_rundt_statistikkmoro_2016_subset.csv = resources\norge_rundt_statistikkmoro_2016_subset.csv
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
