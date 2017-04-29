@@ -1,7 +1,4 @@
-﻿using CsvHelper;
-using CsvHelper.Configuration;
-using System;
-using System.IO;
+﻿using System;
 using System.Linq;
 
 namespace nrundt.indexer
@@ -12,30 +9,14 @@ namespace nrundt.indexer
         {
             Log("It's on!");
 
-            IndexFile(@"..\resources\norge_rundt_statistikkmoro_2016_subset.csv");
+            // Parse CSV file
+            var parser = new Parser(@"..\resources\norge_rundt_statistikkmoro_2016_subset.csv");
+            var result = parser.GetResult<Sequence, SequenceMap>().ToList();
+            Log($"Got {result.Count} sequences");
+
+            // TODO: Index each episode segment
 
             Log("...and we're done");
-        }
-
-        private static void IndexFile(string csvFile)
-        {
-            Log($"Working on file: {csvFile}");
-
-            var csvConfiguration = new CsvConfiguration
-            {
-                Delimiter = ";"
-            };
-
-            csvConfiguration.RegisterClassMap<SequenceMap>();
-
-            using (var stream = File.OpenText(csvFile))
-            {
-                using (var csv = new CsvReader(stream, csvConfiguration))
-                {
-                    var records = csv.GetRecords<Sequence>().ToList();
-                    Log($"Got {records.Count} records");
-                }
-            }
         }
 
         private static void Log(string text)
