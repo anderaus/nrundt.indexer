@@ -1,4 +1,6 @@
-﻿using System;
+﻿using nrundt.indexer.utils;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace nrundt.indexer
@@ -7,19 +9,35 @@ namespace nrundt.indexer
     {
         static void Main(string[] args)
         {
+            VerifyArguments(args);
+
             Log("It's on!");
 
+            // Init AutoMapper
+            AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<Sequence, SequenceIndexItem>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Base64.SafeUrlEncode(src.Title))));
+
             // Parse CSV file
-            var parser = new Parser(@"../resources/norge_rundt_statistikkmoro_2016_subset.csv");
+            var parser = new Parser(@"../resources/norge_rundt_statistikkmoro_2016.csv");
             var result = parser.GetResult<Sequence, SequenceMap>().ToList();
             Log($"Got {result.Count} sequences");
 
-            // TODO: Index each episode segment
-            foreach (var seq in result) {
-                Log(seq.Title);
+            // Create search index and add result to index
+            using (var indexClient = new AzureIndexer(args[0], args[1]))
+            {
+                indexClient.IndexDocuments("norgerundt", AutoMapper.Mapper.Map<IEnumerable<SequenceIndexItem>>(result.Take(1000)));
             }
 
             Log("...and we're done");
+        }
+
+        private static void VerifyArguments(IReadOnlyCollection<string> args)
+        {
+            if (args == null || args.Count != 2)
+            {
+                Console.WriteLine("Error: Pass in Azure Search instance name and admin keys as arguments");
+                Environment.Exit(1);
+            }
         }
 
         private static void Log(string text)
