@@ -38,10 +38,12 @@ function execSearch() {
                 var url = data.value[item].url;
                 var date = new Date(data.value[item].date);
                 var munic = data.value[item].municipality;
+                var theme = data.value[item].mainTheme;
 
                 var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
                 var divContent = '<h4><a href="' + url + '" target="_blank">' + title + '</a></h4>';
+                divContent += '<p>' + theme + '</p>';
                 divContent += '<span class="date">' + date.toLocaleDateString('nb-NO', dateOptions) + '</span> - <strong>' + munic + '</strong>';
 
                 $("#mediaContainer").append(divContent);

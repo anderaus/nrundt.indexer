@@ -1,3 +1,11 @@
+a, a:hover {
+    color: #426298;
+}
+
+#mediaContainer > h4:nth-child(1) {
+    margin-top: 0;
+}
+
 .date {
     display: inline-block;
 }
