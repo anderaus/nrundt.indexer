@@ -1,0 +1,7 @@
+.date {
+    display: inline-block;
+}
+
+.date:first-letter {
+    text-transform: uppercase;   
+}

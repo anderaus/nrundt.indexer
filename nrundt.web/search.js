@@ -29,15 +29,20 @@ function execSearch() {
             console.log('success happened!');
 
             $("#mediaContainer").html('');
-            $("#subjectsContainer").html('');
-            $("#contributorsContainer").html('');
+            // $("#subjectsContainer").html('');
+            // $("#contributorsContainer").html('');
 
             for (var item in data.value) {
 
                 var title = data.value[item].title;
                 var url = data.value[item].url;
+                var date = new Date(data.value[item].date);
+                var munic = data.value[item].municipality;
 
-                var divContent = '<h2><a href="' + url + '">' + title + '</a></h2>';
+                var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
+                var divContent = '<h4><a href="' + url + '" target="_blank">' + title + '</a></h4>';
+                divContent += '<span class="date">' + date.toLocaleDateString('nb-NO', dateOptions) + '</span> - <strong>' + munic + '</strong>';
 
                 $("#mediaContainer").append(divContent);
             }
@@ -49,3 +54,5 @@ function execSearch() {
             execSearch();
     });
 }
+
+execSearch();
