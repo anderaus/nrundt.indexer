@@ -45,16 +45,17 @@ function execSearch() {
 
                 var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
-                var divContent = '<h4><a href="' + url + '" target="_blank">' + title + '</a></h4>';
+                var divContent = '<div class="resultcontainer"><h4><a href="' + url + '" target="_blank">' + title + '</a></h4>';
                 divContent += '<span>' + theme + '</span><br>';
                 divContent += '<span class="date">' + date.toLocaleDateString('nb-NO', dateOptions) + '</span> - <strong>' + munic + '</strong>';
 
                 var clothes = data.value[item].clothes;
-                divContent += '<br>';
+                divContent += '<br><div class="facetscontainer">';
                 for (var clothesItem in clothes) {
                     divContent += '<a href="javascript:void(0);" onclick="setClothesFacet(\'' + clothes[clothesItem] + '\');"><span class="label label-default">' + clothes[clothesItem] + '</span> </a>';
                 }
 
+                divContent += "</div></div>";
                 $("#mediaContainer").append(divContent);
             }
 

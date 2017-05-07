@@ -2,7 +2,7 @@ a, a:hover {
     color: #426298;
 }
 
-#mediaContainer > h4:nth-child(1) {
+#mediaContainer > div:nth-child(1) h4 {
     margin-top: 0;
 }
 
@@ -12,4 +12,12 @@ a, a:hover {
 
 .date:first-letter {
     text-transform: uppercase;   
+}
+
+.resultcontainer {
+    padding-bottom: 12px;
+}
+
+.facetscontainer {
+    padding-top: 8px;
 }
