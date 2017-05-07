@@ -1,5 +1,6 @@
 var inSearch = false;
 var azureSearchQueryApiKey = "3CFB8CC288A0831949695ED96AD0AA61";
+var selectedClothesFacet = '';
 
 function execSearch() {
     if (inSearch) return;
@@ -14,7 +15,10 @@ function execSearch() {
     if (searchQuery.length == 0)
         searchQuery = '*';
 
-    var searchAPI = "https://norgerundt.search.windows.net/indexes/norgerundt/docs?$top=10&api-version=2016-09-01&search=" + searchQuery;
+    if (selectedClothesFacet.length > 0)
+        searchQuery += '&$filter=clothes/any(t: t eq \'' + encodeURIComponent(selectedClothesFacet) + '\')';
+
+    var searchAPI = "https://norgerundt.search.windows.net/indexes/norgerundt/docs?$top=10&api-version=2016-09-01&facet=clothes&search=" + searchQuery;
     console.log('search url: ' + searchAPI);
 
     $.ajax({
@@ -29,8 +33,7 @@ function execSearch() {
             console.log('success happened!');
 
             $("#mediaContainer").html('');
-            // $("#subjectsContainer").html('');
-            // $("#contributorsContainer").html('');
+            $("#clothesFacetsContainer").html('');
 
             for (var item in data.value) {
 
@@ -43,10 +46,24 @@ function execSearch() {
                 var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
                 var divContent = '<h4><a href="' + url + '" target="_blank">' + title + '</a></h4>';
-                divContent += '<p>' + theme + '</p>';
+                divContent += '<span>' + theme + '</span><br>';
                 divContent += '<span class="date">' + date.toLocaleDateString('nb-NO', dateOptions) + '</span> - <strong>' + munic + '</strong>';
 
+                var clothes = data.value[item].clothes;
+                divContent += '<br>';
+                for (var clothesItem in clothes) {
+                    divContent += '<a href="javascript:void(0);" onclick="setClothesFacet(\'' + clothes[clothesItem] + '\');"><span class="label label-default">' + clothes[clothesItem] + '</span> </a>';
+                }
+
                 $("#mediaContainer").append(divContent);
+            }
+
+            // Add Clothes facets
+            var selectedClothesFacet = '';
+            for (var item in data["@search.facets"].clothes) {
+                if (selectedClothesFacet != data["@search.facets"].clothes[item].value) {
+                    $("#clothesFacetsContainer").append('<li><a href="javascript:void(0);" onclick="setClothesFacet(\'' + data["@search.facets"].clothes[item].value + '\');">' + data["@search.facets"].clothes[item].value + ' (' + data["@search.facets"].clothes[item].count + ')</a></li>');
+                }
             }
         }
     }).done(function (data) {
@@ -55,6 +72,16 @@ function execSearch() {
         if (q != $("#query").val())
             execSearch();
     });
+}
+
+function setClothesFacet(facet) {
+    // User clicked on a subject facet
+    selectedClothesFacet = facet;
+    if (facet != '')
+        $("#currentClothesFacet").html(facet + '<a href="javascript:void(0);" onclick="setClothesFacet(\'\');"> [X]</a>');
+    else
+        $("#currentClothesFacet").html('');
+    execSearch();
 }
 
 execSearch();
