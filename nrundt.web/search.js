@@ -60,7 +60,6 @@ function execSearch() {
             }
 
             // Add Clothes facets
-            var selectedClothesFacet = '';
             for (var item in data["@search.facets"].clothes) {
                 if (selectedClothesFacet != data["@search.facets"].clothes[item].value) {
                     $("#clothesFacetsContainer").append('<li><a href="javascript:void(0);" onclick="setClothesFacet(\'' + data["@search.facets"].clothes[item].value + '\');">' + data["@search.facets"].clothes[item].value + ' (' + data["@search.facets"].clothes[item].count + ')</a></li>');
