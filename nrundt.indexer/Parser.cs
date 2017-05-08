@@ -19,7 +19,7 @@ namespace nrundt.indexer
         {
             var csvConfiguration = new CsvConfiguration
             {
-                Delimiter = ";",
+                Delimiter = ";"
             };
 
             csvConfiguration.RegisterClassMap<TMap>();

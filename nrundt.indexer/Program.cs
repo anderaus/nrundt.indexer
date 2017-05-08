@@ -19,13 +19,13 @@ namespace nrundt.indexer
 
             // Parse CSV file
             var parser = new Parser(@"../resources/norge_rundt_statistikkmoro_2016.csv");
-            var result = parser.GetResult<Sequence, SequenceMap>().ToList();
-            Log($"Got {result.Count} sequences");
+            var sequences = parser.GetResult<Sequence, SequenceMap>().ToList();
+            Log($"Got {sequences.Count} sequences");
 
             // Create search index and add result to index
             using (var indexClient = new AzureIndexer(args[0], args[1]))
             {
-                indexClient.IndexDocuments("norgerundt", AutoMapper.Mapper.Map<IEnumerable<SequenceIndexItem>>(result.Take(1000)));
+                indexClient.IndexDocuments("norgerundt", AutoMapper.Mapper.Map<IReadOnlyList<SequenceIndexItem>>(sequences));
             }
 
             Log("...and we're done");
