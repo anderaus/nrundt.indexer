@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace nrundt.indexer
@@ -9,7 +10,7 @@ namespace nrundt.indexer
     {
         public SequenceMap()
         {
-            Map(m => m.Date).Name("dato");
+            Map(m => m.Date).Name("dato").TypeConverterOption(new CultureInfo("nb-NO"));
             Map(m => m.Url).Name("innslag_nettadresse");
             Map(m => m.Title).Name("innslag_tittel");
             Map(m => m.Municipality).Name("innslag_opptak_kommune");
