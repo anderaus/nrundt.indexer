@@ -15,7 +15,24 @@ namespace nrundt.indexer
 
             // Init AutoMapper
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<Sequence, SequenceIndexItem>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Base64.SafeUrlEncode(src.Url))));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Base64.SafeUrlEncode(src.Url)))
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src =>
+                    src.Animals
+                        .Union(src.FarmingAndFishing)
+                        .Union(src.Musicians)
+                        .Union(src.Relationships)
+                        .Union(src.ArtsAndCrafts)
+                        .Union(src.Construction)
+                        .Union(src.CommericalThemes)
+                        .Union(src.EnthusiastThemes)
+                        .Union(src.PublicServices)
+                        .Union(src.Musicians)
+                        .Union(src.Foods)
+                        .Union(src.Historical)
+                        .Union(src.NatureThemes)
+                        .Union(src.PoliticalThemes)
+                        .Union(src.Special)
+                        .Union(src.Sports))));
 
             // Parse CSV file
             var parser = new Parser(@"../resources/norge_rundt_statistikkmoro_2016.csv");
