@@ -11,32 +11,33 @@ namespace nrundt.indexer
         public string MainTheme { get; set; }
         public string[] Special { get; set; }
         public string[] Clothes { get; set; }
+        //public string[] Experience { get; set; }  // Removed due to lack of value/relevance
+        public string[] Construction { get; set; }
+        public string[] Historical { get; set; }
+        //public string[] NatureAndSports { get; set; } // Currently empty in dataset source
+        public string[] ArtsAndCrafts { get; set; }
+        public string[] Sports { get; set; }
+        public string[] EnthusiastThemes { get; set; }
+        //public string[] Science { get; set; }   // Currently empty in dataset source
+        public string[] Relationships { get; set; }
+        public string[] Musicians { get; set; }
+        public string[] Foods { get; set; }
+        public string[] Animals { get; set; }
+        public string[] NatureThemes { get; set; }
+        public string[] CommericalThemes { get; set; }
+        public string[] FarmingAndFishing { get; set; }
+        public string[] PublicServices { get; set; }
+        public string[] PoliticalThemes { get; set; }
+
+        public int NumberOfMen { get; set; }
+        public int NumberOfWomen { get; set; }
     }
 }
 
-////Mappings to-do:
-//innslag_opplevelse
-//innslag_type_bygg_og_industri
-//innslag_type_historisk
-//innslag_type_natur_og_idrett
-//innslag_type_kunst_og_håndverk
-//innslag_type_idrett_og_ fysisk_aktivitet
-//Innslag_tema_samlere_entusiaster_og_oppfinnere
-//innslag_tema_vitenskap
-//medvirkende_relasjoner
-//innslag_type_musikere
-//innslag_type_mat
-//innslag_type_dyr
-//medvirkende_antall_menn
-//medvirkende_antall_kvinner
-//innslag_tema_natur_og_friluftsliv
-//innslag_tema_kjop_og_salg
-//innslag_type_landbruk_og_fiske
-//Innslag_type_offentlige_tjenester_og veldedighet
+////Un-mapped fields to do:
 //medvirkende_hovedperson1_kjonn
 //medvirkende_hovedperson2_kjonn
 //medvirkende_hovedperson3_kjonn
 //medvirkende_hovedperson1_alder
 //medvirkende_hovedperson2_alder
 //medvirkende_hovedperson3_alder
-//tema_politikk_og_media

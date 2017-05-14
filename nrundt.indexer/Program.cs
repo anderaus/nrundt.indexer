@@ -15,7 +15,7 @@ namespace nrundt.indexer
 
             // Init AutoMapper
             AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<Sequence, SequenceIndexItem>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Base64.SafeUrlEncode(src.Title))));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Base64.SafeUrlEncode(src.Url))));
 
             // Parse CSV file
             var parser = new Parser(@"../resources/norge_rundt_statistikkmoro_2016.csv");
