@@ -2,7 +2,7 @@ a, a:hover {
     color: #426298;
 }
 
-#mediaContainer > div:nth-child(1) h4 {
+#searchResult > div:nth-child(1) h4 {
     margin-top: 0;
 }
 

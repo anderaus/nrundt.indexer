@@ -2,6 +2,26 @@ var inSearch = false;
 var azureSearchQueryApiKey = "3CFB8CC288A0831949695ED96AD0AA61";
 var selectedClothesFacet = '';
 
+var searchResults = [
+    { title: 'Min første tittel' },
+    { title: 'Min andre tittel' },
+    { title: 'Terminator 2' }
+];
+
+var app = new Vue({
+    el: '#searchResult',
+    data: {
+        results: searchResults
+    },
+    methods: {
+        facetClick: function (event) {
+            console.log(event);
+            var facet = event.target.textContent;
+            setClothesFacet(facet);
+        }
+    }
+});
+
 function execSearch() {
     if (inSearch) return;
 
@@ -32,31 +52,23 @@ function execSearch() {
         success: function (data) {
             console.log('success happened!');
 
+            searchResults.splice(0, searchResults.length);
+
             $("#mediaContainer").html('');
             $("#clothesFacetsContainer").html('');
 
+            var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
             for (var item in data.value) {
 
-                var title = data.value[item].title;
-                var url = data.value[item].url;
-                var date = new Date(data.value[item].date);
-                var munic = data.value[item].municipality;
-                var theme = data.value[item].mainTheme;
-
-                var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-
-                var divContent = '<div class="resultcontainer"><h4><a href="' + url + '" target="_blank">' + title + '</a></h4>';
-                divContent += '<span>' + theme + '</span><br>';
-                divContent += '<span class="date">' + date.toLocaleDateString('nb-NO', dateOptions) + '</span> - <strong>' + munic + '</strong>';
-
-                var clothes = data.value[item].clothes;
-                divContent += '<br><div class="facetscontainer">';
-                for (var clothesItem in clothes) {
-                    divContent += '<a href="javascript:void(0);" onclick="setClothesFacet(\'' + clothes[clothesItem] + '\');"><span class="label label-default">' + clothes[clothesItem] + '</span> </a>';
-                }
-
-                divContent += "</div></div>";
-                $("#mediaContainer").append(divContent);
+                searchResults.push({
+                    title: data.value[item].title,
+                    url: data.value[item].url,
+                    date: (new Date(data.value[item].date)).toLocaleDateString('nb-NO', dateOptions),
+                    munic: data.value[item].municipality,
+                    theme: data.value[item].mainTheme,
+                    clothes: data.value[item].clothes
+                });
             }
 
             // Add Clothes facets
