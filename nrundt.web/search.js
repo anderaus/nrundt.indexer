@@ -1,12 +1,8 @@
 var inSearch = false;
 var azureSearchQueryApiKey = "3CFB8CC288A0831949695ED96AD0AA61";
 var selectedClothesFacet = '';
-
-var searchResults = [
-    { title: 'Min første tittel' },
-    { title: 'Min andre tittel' },
-    { title: 'Terminator 2' }
-];
+var searchResults = [];
+var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
 var app = new Vue({
     el: '#searchResult',
@@ -15,7 +11,6 @@ var app = new Vue({
     },
     methods: {
         facetClick: function (event) {
-            console.log(event);
             var facet = event.target.textContent;
             setClothesFacet(facet);
         }
@@ -27,7 +22,6 @@ function execSearch() {
 
     inSearch = true;
     var q = $("#query").val();
-    console.log('search query: ' + q);
 
     var searchQuery = encodeURIComponent(q);
     if (q.length = 0)
@@ -39,7 +33,6 @@ function execSearch() {
         searchQuery += '&$filter=clothes/any(t: t eq \'' + encodeURIComponent(selectedClothesFacet) + '\')';
 
     var searchAPI = "https://norgerundt.search.windows.net/indexes/norgerundt/docs?$top=10&api-version=2016-09-01&facet=clothes&search=" + searchQuery;
-    console.log('search url: ' + searchAPI);
 
     $.ajax({
         url: searchAPI,
@@ -50,17 +43,10 @@ function execSearch() {
         },
         type: "GET",
         success: function (data) {
-            console.log('success happened!');
-
-            searchResults.splice(0, searchResults.length);
-
-            $("#mediaContainer").html('');
             $("#clothesFacetsContainer").html('');
 
-            var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-
+            searchResults.splice(0, searchResults.length);
             for (var item in data.value) {
-
                 searchResults.push({
                     title: data.value[item].title,
                     url: data.value[item].url,
