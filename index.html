@@ -24,13 +24,11 @@
             </div>
         </div>
 
-        <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
             <p><img class="img-responsive" src="http://2cr7d915ko0948n0fr1w9gdl14og.wpengine.netdna-cdn.com/wp-content/uploads/2014/11/Programleder.png"></p>
-            <!-- Search Well -->
             <div class="well">
                 <div class="input-group">
-                    <input type="text" placeholder="Søk etter noe her..." class="form-control" id="query" oninput="execSearch();">
+                    <input type="text" placeholder="Søk etter noe her..." class="form-control" id="query" v-on:input="execSearch">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button">
                         <span class="glyphicon glyphicon-search"></span>
