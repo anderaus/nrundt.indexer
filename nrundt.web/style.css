@@ -2,7 +2,7 @@ a, a:hover {
     color: #426298;
 }
 
-#searchResult > div:nth-child(1) h4 {
+#searchresult > div:nth-child(1) h4 {
     margin-top: 0;
 }
 
@@ -20,4 +20,8 @@ a, a:hover {
 
 .facetscontainer {
     padding-top: 8px;
+}
+
+.facetscontainer span.label {
+    margin-right: 4px;
 }

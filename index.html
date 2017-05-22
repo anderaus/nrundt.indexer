@@ -28,7 +28,7 @@
             <p><img class="img-responsive" src="http://2cr7d915ko0948n0fr1w9gdl14og.wpengine.netdna-cdn.com/wp-content/uploads/2014/11/Programleder.png"></p>
             <div class="well">
                 <div class="input-group">
-                    <input type="text" placeholder="Søk etter noe her..." class="form-control" id="query" v-on:input="execSearch">
+                    <input type="text" placeholder="Søk etter noe her..." class="form-control" id="query" v-on:input="execSearch" v-model="searchString">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button">
                         <span class="glyphicon glyphicon-search"></span>
@@ -53,8 +53,8 @@
         </div>
 
         <div class="col-md-8">
-            <div id="searchResult">
-                <div class="resultContainer" v-for="result in results">
+            <div id="searchresult">
+                <div class="resultcontainer" v-for="result in results">
                     <h4><a v-bind:href="result.url" target="_blank">{{result.title}}</a></h4>
                     <span>{{result.theme}}</span><br>
                     <span class="date">{{result.date}}</span> - <strong>{{result.munic}}</strong><br>

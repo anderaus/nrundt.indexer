@@ -1,14 +1,14 @@
 var azureSearchQueryApiKey = "3CFB8CC288A0831949695ED96AD0AA61";
-var searchResults = [];
 var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
 var app = new Vue({
     el: '#searchapp',
     data: {
-        results: searchResults,
+        results: [],
         clothesFacets: [],
         activeClothesFacet: '',
-        inSearch: false
+        searchString: '',
+        isSearching: false
     },
     methods: {
         facetClick: function (clickedFacet) {
@@ -20,18 +20,13 @@ var app = new Vue({
 
             var self = this;
             self.isSearching = true;
-            var q = $("#query").val();
 
-            var searchQuery = encodeURIComponent(q);
-            if (q.length = 0)
-                searchQuery = '*';
-            if (searchQuery.length == 0)
-                searchQuery = '*';
+            var searchQuery = self.searchString || '*';
 
             if (self.activeClothesFacet)
                 searchQuery += '&$filter=clothes/any(t: t eq \'' + encodeURIComponent(self.activeClothesFacet) + '\')';
 
-            var searchAPI = "https://norgerundt.search.windows.net/indexes/norgerundt/docs?$top=20&api-version=2016-09-01&facet=clothes&search=" + searchQuery;
+            var searchAPI = "https://norgerundt.search.windows.net/indexes/norgerundt/docs?$top=10&api-version=2016-09-01&facet=clothes&search=" + encodeURIComponent(searchQuery);
 
             $.ajax({
                 url: searchAPI,
@@ -42,9 +37,9 @@ var app = new Vue({
                 },
                 type: "GET",
                 success: function (data) {
-                    searchResults.splice(0, searchResults.length);
+                    self.results.splice(0, self.results.length);
                     for (var item in data.value) {
-                        searchResults.push({
+                        self.results.push({
                             title: data.value[item].title,
                             url: data.value[item].url,
                             date: (new Date(data.value[item].date)).toLocaleDateString('nb-NO', dateOptions),
@@ -68,7 +63,7 @@ var app = new Vue({
             }).done(function (data) {
                 self.isSearching = false;
                 // Check if the user changed the search term since this completed
-                if (q != $("#query").val())
+                if (searchQuery != self.searchString)
                     self.execSearch();
             });
         }
