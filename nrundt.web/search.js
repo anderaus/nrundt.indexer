@@ -1,13 +1,12 @@
 var azureSearchQueryApiKey = "3CFB8CC288A0831949695ED96AD0AA61";
 var searchResults = [];
 var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-var clothesFacetsOutside = [];
 
 var app = new Vue({
     el: '#searchapp',
     data: {
         results: searchResults,
-        clothesFacets: clothesFacetsOutside,
+        clothesFacets: [],
         activeClothesFacet: '',
         inSearch: false
     },
@@ -56,10 +55,10 @@ var app = new Vue({
                     }
 
                     // Add Clothes facets
-                    clothesFacetsOutside.splice(0, clothesFacetsOutside.length);
+                    self.clothesFacets.splice(0, self.clothesFacets.length);
                     for (var item in data["@search.facets"].clothes) {
                         if (self.activeClothesFacet != data["@search.facets"].clothes[item].value) {
-                            clothesFacetsOutside.push({
+                            self.clothesFacets.push({
                                 title: data["@search.facets"].clothes[item].value,
                                 count: data["@search.facets"].clothes[item].count
                             });
