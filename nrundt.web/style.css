@@ -1,9 +1,15 @@
 a, a:hover {
-    color: #426298;
+    color: #008766;
 }
 
-#searchresult > div:nth-child(1) h4 {
-    margin-top: 0;
+.form-control:focus {
+    border-color: #008766;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(0,135,102,0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(0,135,102,0.6);
+}
+
+#searchresult {
+    margin-top: 26px;
 }
 
 .date {
@@ -15,7 +21,7 @@ a, a:hover {
 }
 
 .resultcontainer {
-    padding-bottom: 12px;
+    padding-bottom: 18px;
 }
 
 .facetscontainer {
@@ -24,4 +30,12 @@ a, a:hover {
 
 .facetscontainer span.label {
     margin-right: 4px;
+}
+
+.page-header {
+    margin: 0 0 22px;
+}
+
+a.novanet, a.novanet:hover, a.novanet:visited {
+    color: #008766;
 }

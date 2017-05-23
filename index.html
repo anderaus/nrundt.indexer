@@ -18,24 +18,14 @@
 
 <body>
     <div class="container" id="searchapp">
-        <div class="col-md-12">
-            <div class="page-header">
-                <h2>Azure Search Demo - Norge Rundt</h2>
-            </div>
+        <div class="page-header">
+            <h1 class="pull-left">Søk Norge Rundt</h1>
+            <h4 class="pull-right">Et <a href="http://www.novanet.no" class="novanet" target="_blank">Novanet</a>-eksperiment</h4>
+            <div class="clearfix"></div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-sm-4">
             <p><img class="img-responsive" src="http://2cr7d915ko0948n0fr1w9gdl14og.wpengine.netdna-cdn.com/wp-content/uploads/2014/11/Programleder.png"></p>
-            <div class="well">
-                <div class="input-group">
-                    <input type="text" placeholder="Søk etter noe her..." class="form-control" id="query" v-on:input="execSearch" v-model="searchString">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                    </span>
-                </div>
-            </div>
 
             <div class="well">
                 <h4>Klær</h4>
@@ -52,7 +42,16 @@
             </div>
         </div>
 
-        <div class="col-md-8">
+        <div class="col-sm-8">
+            <div class="input-group input-group-lg">
+                <input type="text" placeholder="Søk i arkivet her..." class="form-control" id="query" v-on:input="execSearch" v-model="searchString">
+                <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                </button>
+                </span>
+            </div>
+
             <div id="searchresult">
                 <div class="resultcontainer" v-for="result in results">
                     <h4><a v-bind:href="result.url" target="_blank">{{result.title}}</a></h4>
