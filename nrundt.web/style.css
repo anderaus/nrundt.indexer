@@ -28,8 +28,10 @@ a, a:hover, a:focus {
     padding-top: 8px;
 }
 
-.facetscontainer span.label {
+.facetscontainer a {
+    display: inline-block;
     margin-right: 4px;
+    margin-top: 4px;
 }
 
 .page-header {
