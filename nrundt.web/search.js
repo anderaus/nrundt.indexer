@@ -21,13 +21,14 @@ var app = new Vue({
             var self = this;
             self.isSearching = true;
 
-            var searchQuery = self.searchString || '*';
+            var textQuery = self.searchString || '*';
+            var searchQuery = textQuery;
 
             if (self.activeClothesFacet) {
                 searchQuery += '&$filter=clothes/any(t: t eq \'' + encodeURIComponent(self.activeClothesFacet) + '\')';
             }
 
-            var searchAPI = "https://norgerundt.search.windows.net/indexes/norgerundt/docs?$top=10&api-version=2016-09-01&facet=clothes&search=" + encodeURIComponent(searchQuery);
+            var searchAPI = "https://norgerundt.search.windows.net/indexes/norgerundt/docs?$top=10&api-version=2016-09-01&facet=clothes&search=" + searchQuery;
 
             $.ajax({
                 url: searchAPI,
@@ -64,7 +65,7 @@ var app = new Vue({
             }).done(function (data) {
                 self.isSearching = false;
                 // Check if the user changed the search term since this completed
-                if (self.searchString && searchQuery !== self.searchString)
+                if (self.searchString && textQuery !== self.searchString)
                     self.execSearch();
             });
         }
