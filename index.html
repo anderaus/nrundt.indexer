@@ -42,17 +42,30 @@
         <div id="facets" class="col-xs-12 col-sm-4">
             <div class="well">
                 <h4>Klær</h4>
-                <p v-if="activeClothesFacet">{{activeClothesFacet}} <a href="javascript:void(0);" v-on:click="facetClick('')">[X]</a></p>
+                <p v-if="activeClothesFacet">{{activeClothesFacet}} <a href="javascript:void(0);" v-on:click="clothesFacetClick('')">[X]</a></p>
                 <div class="row" v-if="!activeClothesFacet">
                     <div class="col-lg-12">
                         <ul class="list-unstyled">
                             <li v-for="facet in clothesFacets">
-                                <a href="javascript:void(0);" v-on:click="facetClick(facet.title)">{{facet.title}} ({{facet.count}})</a>
+                                <a href="javascript:void(0);" v-on:click="clothesFacetClick(facet.title)">{{facet.title}} ({{facet.count}})</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
+            <div class="well">
+                <h4>Stikkord</h4>
+                <p v-if="activeTagsFacet">{{activeTagsFacet}} <a href="javascript:void(0);" v-on:click="tagsFacetClick('')">[X]</a></p>
+                <div class="row" v-if="!activeTagsFacet">
+                    <div class="col-lg-12">
+                        <ul class="list-unstyled">
+                            <li v-for="facet in tagsFacets">
+                                <a href="javascript:void(0);" v-on:click="tagsFacetClick(facet.title)">{{facet.title}} ({{facet.count}})</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>            
         </div>
 
         <div id="searchresult" class="col-xs-12 col-sm-8 pull-right">
@@ -61,8 +74,11 @@
                 <span>{{result.theme}}</span><br>
                 <span class="date">{{result.date}}</span> - <strong>{{result.munic}}</strong><br>
                 <div class="facetscontainer">
-                    <a v-for="clothesItem in result.clothes" v-on:click="facetClick(clothesItem)" href="javascript:void(0);"><span class="label label-default">{{clothesItem}}</span></a>
+                    <a v-for="clothesItem in result.clothes" v-on:click="clothesFacetClick(clothesItem)" href="javascript:void(0);"><span class="label label-default">{{clothesItem}}</span></a>
                 </div>
+                <div class="facetscontainer">
+                    <a v-for="tagsItem in result.tags" v-on:click="tagsFacetClick(tagsItem)" href="javascript:void(0);"><span class="label label-default">{{tagsItem}}</span></a>
+                </div>                
             </div>
         </div>
 

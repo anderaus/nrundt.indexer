@@ -7,14 +7,20 @@ var app = new Vue({
         results: [],
         clothesFacets: [],
         activeClothesFacet: '',
+        tagsFacets: [],
+        activeTagsFacet: '',
         searchString: '',
         isSearching: false
     },
     methods: {
-        facetClick: function (clickedFacet) {
+        clothesFacetClick: function (clickedFacet) {
             this.activeClothesFacet = clickedFacet;
             this.execSearch();
         },
+        tagsFacetClick: function (clickedFacet) {
+            this.activeTagsFacet = clickedFacet;
+            this.execSearch();
+        },        
         execSearch: function () {
             if (this.isSearching) return;
 
@@ -24,11 +30,22 @@ var app = new Vue({
             var textQuery = self.searchString || '*';
             var searchQuery = textQuery;
 
+            // TODO: These won't work. Need a way to add multiple filters without reusing the $filter param (which is not allowed)
+            var filter = '';
             if (self.activeClothesFacet) {
-                searchQuery += '&$filter=clothes/any(t: t eq \'' + encodeURIComponent(self.activeClothesFacet) + '\')';
+                filter += 'clothes/any(t: t eq \'' + encodeURIComponent(self.activeClothesFacet) + '\')';
+            }
+            if (self.activeTagsFacet) {
+                if (filter) filter += ' and ';
+                filter += 'tags/any(t: t eq \'' + encodeURIComponent(self.activeTagsFacet) + '\')';
+            }
+            if (filter) {
+                searchQuery += '&$filter=' + filter;
             }
 
-            var searchAPI = "https://norgerundt.search.windows.net/indexes/norgerundt/docs?$top=10&api-version=2016-09-01&facet=clothes&search=" + searchQuery;
+            console.log(searchQuery);
+
+            var searchAPI = "https://norgerundt.search.windows.net/indexes/norgerundt/docs?$top=10&api-version=2016-09-01&facet=clothes&facet=tags&search=" + searchQuery;
 
             $.ajax({
                 url: searchAPI,
@@ -47,7 +64,8 @@ var app = new Vue({
                             date: (new Date(data.value[item].date)).toLocaleDateString('nb-NO', dateOptions),
                             munic: data.value[item].municipality,
                             theme: data.value[item].mainTheme,
-                            clothes: data.value[item].clothes
+                            clothes: data.value[item].clothes,
+                            tags: data.value[item].tags
                         });
                     }
 
@@ -58,6 +76,17 @@ var app = new Vue({
                             self.clothesFacets.push({
                                 title: data["@search.facets"].clothes[item].value,
                                 count: data["@search.facets"].clothes[item].count
+                            });
+                        }
+                    }
+
+                    // Add Tags facets
+                    self.tagsFacets.splice(0, self.tagsFacets.length);
+                    for (var item in data["@search.facets"].tags) {
+                        if (self.activeTagsFacet != data["@search.facets"].tags[item].value) {
+                            self.tagsFacets.push({
+                                title: data["@search.facets"].tags[item].value,
+                                count: data["@search.facets"].tags[item].count
                             });
                         }
                     }
