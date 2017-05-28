@@ -24,9 +24,22 @@
             <div class="clearfix"></div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-xs-12 col-sm-4">
             <p><img class="img-responsive" src="http://2cr7d915ko0948n0fr1w9gdl14og.wpengine.netdna-cdn.com/wp-content/uploads/2014/11/Programleder.png"></p>
+        </div>
 
+        <div class="col-xs-12 col-sm-8 pull-right">
+            <div class="input-group input-group-lg">
+                <input type="text" placeholder="Søk i arkivet her..." class="form-control" id="query" v-on:input="execSearch" v-model="searchString">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                        <span class="glyphicon glyphicon-search"></span>
+                </button>
+                </span>
+            </div>
+        </div>
+
+        <div id="facets" class="col-xs-12 col-sm-4">
             <div class="well">
                 <h4>Klær</h4>
                 <p v-if="activeClothesFacet">{{activeClothesFacet}} <a href="javascript:void(0);" v-on:click="facetClick('')">[X]</a></p>
@@ -42,24 +55,13 @@
             </div>
         </div>
 
-        <div class="col-sm-8">
-            <div class="input-group input-group-lg">
-                <input type="text" placeholder="Søk i arkivet her..." class="form-control" id="query" v-on:input="execSearch" v-model="searchString">
-                <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <span class="glyphicon glyphicon-search"></span>
-                </button>
-                </span>
-            </div>
-
-            <div id="searchresult">
-                <div class="resultcontainer" v-for="result in results">
-                    <h4><a v-bind:href="result.url" target="_blank">{{result.title}}</a></h4>
-                    <span>{{result.theme}}</span><br>
-                    <span class="date">{{result.date}}</span> - <strong>{{result.munic}}</strong><br>
-                    <div class="facetscontainer">
-                        <a v-for="clothesItem in result.clothes" v-on:click="facetClick(clothesItem)" href="javascript:void(0);"><span class="label label-default">{{clothesItem}}</span></a>
-                    </div>
+        <div id="searchresult" class="col-xs-12 col-sm-8 pull-right">
+            <div class="resultcontainer" v-for="result in results">
+                <h4><a v-bind:href="result.url" target="_blank">{{result.title}}</a></h4>
+                <span>{{result.theme}}</span><br>
+                <span class="date">{{result.date}}</span> - <strong>{{result.munic}}</strong><br>
+                <div class="facetscontainer">
+                    <a v-for="clothesItem in result.clothes" v-on:click="facetClick(clothesItem)" href="javascript:void(0);"><span class="label label-default">{{clothesItem}}</span></a>
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@ a, a:hover {
 }
 
 #searchresult {
-    margin-top: 26px;
+    margin-top: 0;
 }
 
 .date {
@@ -38,4 +38,34 @@ a, a:hover {
 
 a.novanet, a.novanet:hover, a.novanet:visited {
     color: #008766;
+}
+
+@media (max-width: 768px)  {
+    #facets {
+        margin-top: 12px;
+    }
+}
+
+@media (min-width: 768px)  {
+    #facets {
+        margin-left: -240px;
+        margin-top: 190px;
+    }
+    #searchresult {
+        margin-top: 18px;
+    }
+}
+
+@media (min-width: 992px)  {
+    #facets {
+        margin-left: -314px;
+        margin-top: 246px;
+    }
+}
+
+@media (min-width: 1200px)  {
+    #facets {
+        margin-left: -380px;
+        margin-top: 296px;
+    }
 }
